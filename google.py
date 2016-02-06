@@ -42,11 +42,17 @@ def get_page(search):
 
 def parse_search_request():
     """Parses stdin first, if None then parses command line arguments to get search request for Google spell checking"""
+    if sys.stdin.isatty():
+        return ' '.join(sys.argv[1:])
     stdin_list = sys.stdin.readlines()
-    if stdin_list is not None:
-        stdin = ''.join(stdin_list)
-        return stdin
-    return ' '.join(sys.argv[1:])
+    stdin = ''.join(stdin_list)
+    return stdin
+
+def has_stdin():
+    if select.select([sys.stdin,],[],[],0.0)[0]:
+        return True
+    else:
+        return False
 
 if __name__ == '__main__':
     main()
