@@ -11,17 +11,21 @@ def main():
     """Main logic that prints to standard out"""
     search_request = parse_search_request()
 
-    page = get_page(search_request)
+    print(get_google_spelling(search_request))
+
+def get_google_spelling(phrase):
+    """Return how google would spell the phrase"""
+    page = get_page(phrase)
 
     spell_tag = get_spell_tag(page)
 
     # If the spell tag does not exist or if the text is empty then the input is
-    # spelled correctly as far as Google is concerned, output it
-    # otherwise output the Google spelling
+    # spelled correctly as far as Google is concerned so we output the input
     if spell_tag is None or spell_tag.text == "":
-        print(search_request)
+        return phrase
     else:
-        print(spell_tag.text)
+        return spell_tag.text
+
 
 def get_spell_tag(page):
     """Get out the tag that has the Google spelling or is empty"""
