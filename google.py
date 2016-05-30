@@ -11,7 +11,14 @@ def main():
     """Main logic that prints to standard out"""
     search_request = parse_search_request()
 
-    print(get_google_spelling(search_request))
+    # Check if output is terminal, if so output newline for readablity
+    # If not, do not output a newline
+    if sys.stdout.isatty():
+        end_char = "\n"
+    else:
+        end_char = ""
+
+    print(get_google_spelling(search_request), end=end_char)
 
 def get_google_spelling(phrase):
     """Return how google would spell the phrase"""
